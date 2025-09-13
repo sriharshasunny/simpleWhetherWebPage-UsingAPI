@@ -1,0 +1,156 @@
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0f2027; /* fallback */
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    }
+
+    .weather-card {
+      width: 300px;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: #fff;
+      box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+      height: 400px;
+      
+    }
+
+    /* Search Box */
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #fffbfb33;
+      border-radius: 30px;
+      padding: 8px 12px;
+      margin-bottom: 25px;
+      border: 1px solid whitesmoke;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      color: #fff;
+      padding: 6px;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .search-box button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .search-box img {
+      width: 20px;
+      height: 20px;
+      filter: invert(1);
+      filter:drop-shadow(2px 2px 5px #a30000);
+    }
+    .weather-icon {
+      margin: 15px 0;
+    }
+
+    .weather-icon img {
+      width: 100px;
+      height: 100px;
+    }
+    .temp {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .city {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .bottom-info {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .bottom-info div {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bottom-info img {
+      width: 30px;
+      height: 30px;
+      filter: invert(1);
+    }
+    .heading {
+  font-size: 34px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+   text-shadow: 2px 2px 5px #00f2fe, 0 0 10px #00f2fe;
+   margin-top: -10px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="weather-card">
+    <h2 class="heading">🌤 Weather App</h2>
+    <div class="search-box">
+      <input type="text" placeholder="Search">
+      <button onClick="checkWhether()"><img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="search"></button>
+    </div>
+    <div class="weather-icon">
+      <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="Weather Icon">
+    </div>
+    <div class="temp">--°C</div>
+    <div class="city">--------</div>
+    <div class="bottom-info">
+      <div>
+        <img src="https://cdn-icons-png.flaticon.com/512/728/728093.png" alt="Humidity">
+        <span class="humidity">--% Humidity</span>
+      </div>
+      <div>
+        <img src="https://cdn-icons-png.flaticon.com/512/553/553416.png" alt="Wind">
+        <span class="wind">-- km/h Wind🍃</span>
+      </div>
+    </div>
+    <div id="output"></div>
+  </div>
+  <script>
+     const apiKey="9c0ca0472957f6531cd6fe6328ff0100"
+   
+   async function checkWhether() {
+     var city=document.querySelector(".search-box input").value||"Hyderabad";
+        const apiUrl=`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}`;
+       const res= await fetch(apiUrl+`&appid=${apiKey}`);
+       var data= await res.json();
+       document.querySelector(".temp").innerHTML=Math.round(data.main.temp)+"°C";
+       document.querySelector(".city").innerHTML=data.name;
+       document.querySelector(".humidity").innerHTML=data.main.humidity+"% Humidity";
+       document.querySelector(".wind").innerHTML=data.wind.speed+" km/h Wind🍃";
+    //      document.getElementById("output").innerHTML =
+    //   "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+  }
+    
+    checkWhether();
+  </script>
+</body>
+</html>
